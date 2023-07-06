@@ -1,0 +1,43 @@
+h3
+ {
+    background-color: blue;
+    text-decoration: underline black;
+    margin-right: 0;
+ }
+ h1
+ {
+  float:  right;
+  margin-top: 4%;
+  margin-right: 65%;
+  margin-left: -100px; 
+ }
+ 
+ #estu 
+ {
+  
+  margin-top: -1cm;
+  margin-left: 170px;
+  
+  
+ }
+ #letra
+ {
+  font-family: 'Dancing Script', cursive;
+ }
+ #foto
+ {
+  
+  border-color: blue;
+  border-style: none;
+  border-width: 15px;
+  border-radius: 100px;
+  
+ }
+ body
+ {
+   background-color: #c9c9c9 
+ }
+ 
+ 
+ 
+  

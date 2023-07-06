@@ -1,0 +1,249 @@
+using System.Collections.Specialized;
+using System.Collections;
+
+namespace Farina_Mariela
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Hashtable Socios = new Hashtable();
+            StringCollection DNI1 = new StringCollection();
+            StringCollection Nombre2 = new StringCollection();
+
+            DNI1.Add("11111111");
+            DNI1.Add("22222222");
+            DNI1.Add("33333333");
+            DNI1.Add("44444444");
+            DNI1.Add("55555555");
+            Nombre2.Add("Mariela Farina");
+            Nombre2.Add("Alma Giordano");
+            Nombre2.Add("Marta Rossi");
+            Nombre2.Add("Adriana Aimar");
+            Nombre2.Add("Facundo Farina");
+
+            int opcion;
+
+
+
+            do
+            {
+                opcion = mostrarMenu();
+
+                switch (opcion)
+                {
+                    case 1:
+                        agregarNombre(Socios);
+                        break;
+
+                    case 2:
+                        modificarNombre(Socios);
+                        break;
+
+                    case 3:
+                        eliminarSocios(Socios);
+                        break;
+
+                    case 4:
+                        eliminarUnSocio(Socios);
+                        break;
+
+                    case 5:
+                        listarTodos(Socios);
+                        break;
+
+                    case 6:
+                        buscarPorDNI(Socios);
+                        break;
+                    case 7:
+                        importar(Socios, DNI1, Nombre2);
+                        break;
+
+                }
+                
+
+
+            } while (opcion != 0);
+            static void importar(Hashtable Socios, StringCollection primera, StringCollection segunda)
+            {
+                if (Socios.Count > 0)
+                {
+                    string letra = ingresarNombre("Está seguro de importar nuevos elementos ? S = si N = no");
+                    if (letra.ToUpper() == "S")
+                    {
+                        Socios.Clear();
+
+                        for (int i = 0; i < primera.Count; i++)
+                        {
+                            Socios.Add(primera[i], segunda[i]);
+                        }
+                        Console.WriteLine("Los datos se importaron con exito.");
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < primera.Count; i++)
+                    {
+                        Socios.Add(primera[i], segunda[i]);
+                    }
+                    Console.WriteLine("Los datos se importaron con exito.");
+                    Console.ReadKey();
+                }
+
+
+            }
+            static int mostrarMenu()
+            {
+                bool correcto;
+                int opcion;
+                do
+                {
+
+                    Console.Clear();
+                    Console.WriteLine("Seleccione opcion:");
+                    Console.WriteLine("1 --> Agregar");
+                    Console.WriteLine("2 --> Modificar");
+                    Console.WriteLine("3 --> Eliminar");
+                    Console.WriteLine("4 --> Eliminar un socio");
+                    Console.WriteLine("5 --> Listar todos");
+                    Console.WriteLine("6 --> buscar por DNI");
+                    Console.WriteLine("7 --> Importar datos");
+                    Console.WriteLine("0 --> Salir");
+                    correcto = int.TryParse(Console.ReadLine(), out opcion);
+                } while (!correcto || opcion < 0 || opcion > 7);
+
+                return opcion;
+            }
+            static void agregarNombre(Hashtable Socios)
+            {
+                string numero;
+                numero = ingresarNombre("Ingrese el DNI del socio");
+                numero = numero.PadLeft(8, '0');
+                if (Socios.ContainsKey(numero))
+                {
+                    mostrarError("El numero ingresado ya fue cargado.");
+                }
+                else
+                {
+                    string titulo = ingresarNombre("Ingrese Nombre y Apellido:");
+                    Socios.Add(numero, titulo);
+                }
+
+
+            }
+
+            static string ingresarNombre(string mj)
+            {
+                string titulo;
+
+
+                do
+                {
+                    Console.Clear();
+                    Console.WriteLine(mj);
+                    titulo = Console.ReadLine().ToLower().Trim();
+                } while (titulo == "");
+                return titulo;
+            }
+            static void modificarNombre(Hashtable Socios)
+            {
+                if (Socios.Count > 0)
+                {
+                    string nuevoProducto;
+                    string buscado = ingresarNombre("Ingrese el DNI a modificar:");
+                    buscado = buscado.PadLeft(8, '0');
+                    if (Socios.ContainsKey(buscado))
+                    {
+                        nuevoProducto = ingresarNombre("Ingrese nuevo Nombre y apellido:");
+                        Socios[buscado] = nuevoProducto;
+                        Console.WriteLine("El Nombre y apellido fue modificado con exito.");
+                        Console.ReadKey();
+                    }
+                    else mostrarError("El DNI ingresado no existe.");
+                }
+                else mostrarError("La coleccion esta vacia.");
+            }
+            static void eliminarSocios(Hashtable Socios)
+            {
+
+                Console.WriteLine("Esta seguro de eleminar todos los socios? S = si");
+                if (Console.ReadLine().ToLower() == "s")
+                {
+                    Socios.Clear();
+                    Console.WriteLine("se han borrado todos los socios.");
+                    Console.ReadKey();
+                }
+
+                else
+                    mostrarError("No existen socios cargados");
+
+            }
+
+            static void eliminarUnSocio(Hashtable Socios)
+            {
+                if (Socios.Count > 0)
+                {
+                    string respuesta;
+                    string buscado = ingresarNombre("Ingrese DNI a eliminar:");
+                    buscado = buscado.PadLeft(8, '0');
+
+                    if (Socios.ContainsKey(buscado))
+                    {
+                        Console.WriteLine("Esta seguro de eliminar el elemento? S = si N = no.");
+                        respuesta = Console.ReadLine().ToUpper().Trim();
+                        if (respuesta == "S")
+                        {
+                            Socios.Remove(buscado);
+                            Console.WriteLine("El DNI fue eliminado con exito.");
+                            Console.ReadKey();
+                        }
+
+                    }
+                    else mostrarError("El DNI ingresado no existe.");
+                }
+                else mostrarError("La coleccion está vacia.");
+            }
+            static void listarTodos(Hashtable Socios)
+            {
+                if (Socios.Count > 0)
+                {
+                    foreach (DictionaryEntry lista in Socios)
+                    {
+                        Console.WriteLine($"DNI: [{lista.Key}]  Nombre y apellido: [{lista.Value}]");
+
+                    }
+                    Console.ReadKey();
+                }
+                else
+                    mostrarError("La coleccion está vacia.");
+            }
+            
+            static void buscarPorDNI(Hashtable Socios)
+            {
+                Console.WriteLine("Ingrese el DNI o nombre a buscar");
+                var buscado = Console.ReadLine();
+                if (Socios.Count > 0)
+                {
+
+                    foreach (DictionaryEntry nro in Socios)
+                    {
+                        if (nro.Key.ToString() == buscado ||nro.Value.ToString() == buscado)
+                        {
+                            Console.WriteLine("Encontrado");
+                        }
+                    }
+                }
+                else Console.WriteLine("La coleccion esta vacia.");
+                Console.ReadKey();
+            }
+            static void mostrarError(string mj)
+            {
+                Console.Clear();
+                Console.WriteLine(mj);
+                Console.ReadKey();
+            }
+
+        }
+    }
+    
+}

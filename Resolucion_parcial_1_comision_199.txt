@@ -1,0 +1,104 @@
+using System;
+
+namespace Farina_Mariela
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            int opcion;
+            string parrafo = "";
+            int letras = 0, numeros = 0, puntuacion = 0;
+
+            do
+            {
+                opcion = seleccionMenu();
+
+                switch (opcion)
+
+                {
+                    case 1:
+                        do
+                        {
+                            Console.Clear();
+                            Console.WriteLine("ingrese un parrafo no vacio");
+                            parrafo = Console.ReadLine();
+
+                            int largoTextoIngresado = parrafo.Length;
+                            if (largoTextoIngresado < 20)
+                            {
+                                Console.WriteLine("El texto ingresado es menor a 20 letras!");
+                                Console.WriteLine("Ingrese un texto no menor a 20 letras.");
+                                parrafo = Console.ReadLine();
+                            }
+                        } while (parrafo == "" || parrafo.Length < 20);
+
+                        break;
+
+                    case 2:
+
+                       
+                        Console.WriteLine("Mostrar info de caracteres");
+                        for (int i = 0; i < parrafo.Length; i++)
+                        {
+                            if (char.IsLetter(parrafo[i]) == true) letras++;
+                            else if (char.IsDigit(parrafo[i]) == true) numeros++;
+                            else if (char.IsPunctuation(parrafo[i]) == true) puntuacion++;
+                        }
+                        Console.WriteLine($"En el parrafo hay\nLetras:{letras}\tDigitos:{numeros}\tPuntuación:{puntuacion}");
+                        char[] delimita = new char[] { '.', ' ', ',' };
+                        string[] vecParrafo = parrafo.Split(delimita);
+                        Array.Sort(vecParrafo);
+                        Console.WriteLine("La cantidad de palabras del texto son:" + vecParrafo.Length);
+                        Console.WriteLine(string.Join("-", vecParrafo));
+                        Console.ReadLine();
+                        int MenorA5 = 0;
+                        int MayorA9 = 0;
+                        foreach (var elem in vecParrafo)
+                        {
+                            if (elem.Length != 0 && elem.Length > 9)
+                            {
+                                MayorA9++;
+                            }
+                            else if (elem.Length != 0 && elem.Length < 5)
+                            {
+                                MenorA5++;
+                            }
+
+                        }
+                        Console.WriteLine($"Hay {MayorA9} palabras mayores a 9 caracteres, y {MenorA5} palabras con menos de 5 caracteres");
+
+                        break;
+
+
+
+                }
+            } while (opcion != 0);
+
+        }
+        static int seleccionMenu()
+        {
+            bool numeroCorrecto = false;
+            int opcion;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Seleccione un Nro de opcion:");
+                Console.WriteLine("1- Ingresar parrafo");
+                Console.WriteLine("2- Mostrar info del parrafo");
+                Console.WriteLine("0- Salir");
+                numeroCorrecto = int.TryParse(Console.ReadLine(), out opcion);
+
+            } while (!numeroCorrecto || opcion < 0 || opcion > 2);
+
+            return opcion;
+        }
+       
+    }
+
+
+
+}
+    
+

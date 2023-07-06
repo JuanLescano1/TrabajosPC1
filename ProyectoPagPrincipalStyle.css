@@ -1,0 +1,50 @@
+body
+ {
+   background-color: #c9c9c9 
+ }
+
+.imagen
+{
+ width: 100px;
+ height: 100px;
+ margin: 0;
+}
+.buscador
+{
+    margin-bottom: 100px;
+    margin-left: 35%;
+    
+}
+    
+#buscar
+{
+    border-radius: 0%;   
+    
+    border: rgb(249, 253, 2) 8px inset;
+    padding-left: 50px;
+    padding-right: 10px;
+    
+}
+#enviar
+{
+    border-radius: 0%;   
+    
+    border: rgb(249, 253, 2) 8px inset;
+    padding-left: 50px;
+    padding-right: 10px;
+    
+}
+.Descripcion p
+{
+ margin: 0;
+}
+.Titulo h2
+{
+    margin: 0;
+    margin-bottom: 4px;
+}
+.TituloDescr
+{
+    margin: 0;
+}
+
